@@ -1,0 +1,18 @@
+<h1>Session#1</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, CollyWeb.ItemLive.FormComponent,
+    id: @item.id || :new,
+    title: @page_title,
+    action: @live_action,
+    item: @item,
+    return_to: Routes.item_index_path(@socket, :index) %>
+<% end %>
+
+<div id="items">
+  <%= for item <- @items do %>
+    <%= live_component @socket, CollyWeb.ItemLive.ItemComponent, id: item.id, item: item %>
+  <% end %>
+</div>
+
+<span><%= live_patch "New Item", to: Routes.item_index_path(@socket, :new) %></span>
