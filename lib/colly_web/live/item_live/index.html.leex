@@ -9,7 +9,7 @@
     return_to: Routes.item_index_path(@socket, :index) %>
 <% end %>
 
-<div id="items">
+<div id="items" phx-update="prepend">
   <%= for item <- @items do %>
     <%= live_component @socket, CollyWeb.ItemLive.ItemComponent, id: item.id, item: item %>
   <% end %>

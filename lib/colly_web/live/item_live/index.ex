@@ -8,7 +8,7 @@ defmodule CollyWeb.ItemLive.Index do
   def mount(_params, _session, socket) do
     if connected?(socket), do: Collab.subscribe()
 
-    {:ok, assign(socket, :items, fetch_items())}
+    {:ok, assign(socket, :items, fetch_items()), temporary_assigns: [items: []]}
   end
 
   @impl true
@@ -44,6 +44,10 @@ defmodule CollyWeb.ItemLive.Index do
 
   @impl true
   def handle_info({:item_created, item}, socket) do
+    {:noreply, update(socket, :items, fn items -> [item | items] end)}
+  end
+
+  def handle_info({:item_updated, item}, socket) do
     {:noreply, update(socket, :items, fn items -> [item | items] end)}
   end
 

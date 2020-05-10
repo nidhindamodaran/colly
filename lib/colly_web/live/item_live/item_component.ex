@@ -15,21 +15,35 @@ defmodule CollyWeb.ItemLive.ItemComponent do
 
       <div class="row">
         <div class="column">
-          <i class="far fa-heart"></i><%= @item.likes_count %>
+          <a href="#" phx-click="like" phx-target="<%= @myself %>">
+            <i class="far fa-heart"></i><%= @item.likes_count %>
+          </a>
         </div>
         <div class="column">
-          <i class="far fa-heart"></i><%= @item.dislikes_count %>
+          <a href="#" phx-click="dislike" phx-target="<%= @myself %>">
+            <i class="far fa-heart"></i><%= @item.dislikes_count %>
+          </a>
         </div>
         <div class="column">
           <%= live_patch to: Routes.item_index_path(@socket, :edit, @item.id) do %>
-            <i class="far fa-edit"></i>
+            <i class="far fa-edit">EDIT</i>
           <% end %>
           <%= link to: '#', phx_click: 'delete', phx_value_id: @item.id do %>
-            <i class="far fa-trash-alt"></i>
+            <i class="far fa-trash-alt">DELETE</i>
           <% end %>
         </div>
       </div>
      </div>
      """
+  end
+
+  def handle_event("like", _, socket) do
+    Colly.Collab.increment_likes(socket.assigns.item)
+    {:noreply, socket}
+  end
+
+  def handle_event("dislike", _, socket) do
+    Colly.Collab.increment_dislikes(socket.assigns.item)
+    {:noreply, socket}
   end
 end

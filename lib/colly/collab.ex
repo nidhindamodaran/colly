@@ -21,6 +21,20 @@ defmodule Colly.Collab do
     Repo.all(from i in Item, order_by: [desc: i.id])
   end
 
+  def increment_likes(%Item{id: id}) do
+    {1, [item]} = 
+      from(i in Item, where: i.id == ^id, select: i)
+      |> Repo.update_all(inc: [likes_count: 1])
+    broadcast({:ok, item}, :item_updated)
+  end
+
+  def increment_dislikes(%Item{id: id}) do
+    {1, [item]} = 
+      from(i in Item, where: i.id == ^id, select: i)
+      |> Repo.update_all(inc: [dislikes_count: 1])
+    broadcast({:ok, item}, :item_updated)
+  end
+
   @doc """
   Gets a single item.
 
@@ -72,7 +86,7 @@ defmodule Colly.Collab do
     item
     |> Item.changeset(attrs)
     |> Repo.update()
-    |> broadcast(:item_created)
+    |> broadcast(:item_updated)
   end
 
   @doc """
