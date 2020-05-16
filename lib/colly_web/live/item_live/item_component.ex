@@ -3,33 +3,22 @@ defmodule CollyWeb.ItemLive.ItemComponent do
   
   def render(assigns) do
     ~L"""
-     <div id="post-<%= @item.id %>" class="item">
-      <div class="row">
-        <div class="column column-10">
-          <div class="post-avatar"></div>
-        </div>
-        <div class="column column-90 item-body">
-          <%= @item.content %>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="column">
-          <a href="#" phx-click="like" phx-target="<%= @myself %>">
-            <i class="far fa-heart"></i><%= @item.likes_count %>
+     <div id="post-<%= @item.id %>" class="item mb-3">
+      <div class="card">
+        <div class="card-body item-body">
+          <div class="card-text"><%= @item.content %></div>
+          
+          <a href="#" phx-click="like" phx-target="<%= @myself %>" class="card-link">
+            <span class="fas fa-thumbs-up"></span><%= @item.likes_count %>
           </a>
-        </div>
-        <div class="column">
-          <a href="#" phx-click="dislike" phx-target="<%= @myself %>">
-            <i class="far fa-heart"></i><%= @item.dislikes_count %>
+          <a href="#" phx-click="dislike" phx-target="<%= @myself %>" class="card-link">
+            <i class="fas fa-thumbs-down"></i><%= @item.dislikes_count %>
           </a>
-        </div>
-        <div class="column">
-          <%= live_patch to: Routes.item_index_path(@socket, :edit, @item.id) do %>
-            <i class="far fa-edit">EDIT</i>
+          <%= live_patch to: Routes.item_index_path(@socket, :edit, @item.id), class: "card-link" do %>
+            <i class="fas fa-edit"></i>
           <% end %>
-          <%= link to: '#', phx_click: 'delete', phx_value_id: @item.id do %>
-            <i class="far fa-trash-alt">DELETE</i>
+          <%= link to: '#', phx_click: 'delete', phx_value_id: @item.id, class: "card-link" do %>
+            <i class="fas fa-trash-alt"></i>
           <% end %>
         </div>
       </div>

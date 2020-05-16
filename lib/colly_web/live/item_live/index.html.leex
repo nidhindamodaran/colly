@@ -8,11 +8,15 @@
     item: @item,
     return_to: Routes.item_index_path(@socket, :index) %>
 <% end %>
-
+<span>
+  <%= live_patch to: Routes.item_index_path(@socket, :new) do %>
+    <i class='fas fa-plus main-icon'></i>
+  <% end %>
+</span>
 <div id="items" phx-update="prepend">
   <%= for item <- @items do %>
     <%= live_component @socket, CollyWeb.ItemLive.ItemComponent, id: item.id, item: item %>
   <% end %>
 </div>
 
-<span><%= live_patch "New Item", to: Routes.item_index_path(@socket, :new) %></span>
+

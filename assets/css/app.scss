@@ -1,8 +1,25 @@
 /* This file is for your main application css. */
+@import 'bootstrap';
 @import "./phoenix.css";
 @import "../node_modules/nprogress/nprogress.css";
 
 /* LiveView specific classes for your customizations */
+
+html{
+  font-size: 16px;
+}
+
+main{
+  margin-top: 100px !important;
+}
+
+.main-icon{
+  font-size: 40px;
+}
+
+.card-link{
+  color: #949494;
+}
 .invalid-feedback {
   color: #a94442;
   display: block;
