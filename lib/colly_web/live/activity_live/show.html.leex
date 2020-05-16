@@ -1,0 +1,28 @@
+<h1>Session#<%= @activity.id %></h1>
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, CollyWeb.ItemLive.FormComponent,
+    id: @item.id || :new,
+    title: @page_title,
+    action: @live_action,
+    item: @item,
+    activity: @activity,
+    return_to: Routes.item_index_path(@socket, :index) %>
+<% end %>
+<span>
+  <%= live_patch to: Routes.item_index_path(@socket, :new, activity: @activity) do %>
+    <i class='fas fa-plus main-icon'></i>
+  <% end %>
+</span>
+
+<form action="#" phx-submit="add">
+  <%= text_input :item, :content, placeholder: "Start typing" %>
+  <%= submit "Add", phx_disable_with: "Adding.." %>
+</form>
+
+<div id="items" phx-update="prepend">
+  <%= for item <- @items do %>
+    <%= live_component @socket, CollyWeb.ItemLive.ItemComponent, id: item.id, item: item %>
+  <% end %>
+</div>
+
+

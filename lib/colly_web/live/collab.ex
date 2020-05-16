@@ -1,3 +1,4 @@
+require IEx
 defmodule Colly.Collab do
   @moduledoc """
   The Collab context.
@@ -19,6 +20,11 @@ defmodule Colly.Collab do
   """
   def list_items do
     Repo.all(from i in Item, order_by: [desc: i.id])
+  end
+
+  def list_items(activity_id) do
+    query = from(i in Item, where: [activity_id: ^activity_id], order_by: [desc: i.id])
+    Repo.all(query)
   end
 
   def increment_likes(%Item{id: id}) do
@@ -63,9 +69,11 @@ defmodule Colly.Collab do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_item(attrs \\ %{}) do
+  def create_item(activity, attrs \\ %{}) do
+    IEx.pry
     %Item{}
     |> Item.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:activity, activity)
     |> Repo.insert()
     |> broadcast(:item_created)
   end
@@ -118,14 +126,110 @@ defmodule Colly.Collab do
     Item.changeset(item, attrs)
   end
 
-  def subscribe do
-    Phoenix.PubSub.subscribe(Colly.PubSub, "items")
-  end 
+  def subscribe(activity_id) do
+    Phoenix.PubSub.subscribe(Colly.PubSub, "items:#{activity_id}")
+  end
 
   defp broadcast({:error, _reason} = error, _event), do: error
 
   defp broadcast({:ok, item}, event) do
-    Phoenix.PubSub.broadcast(Colly.PubSub, "items", {event, item})
+    Phoenix.PubSub.broadcast(Colly.PubSub, "items:#{item.activity_id}", {event, item})
     {:ok, item}
+  end
+
+  alias Colly.Collab.Activity
+
+  @doc """
+  Returns the list of activities.
+
+  ## Examples
+
+      iex> list_activities()
+      [%Activity{}, ...]
+
+  """
+  def list_activities do
+    Repo.all(Activity)
+  end
+
+  @doc """
+  Gets a single activity.
+
+  Raises `Ecto.NoResultsError` if the Activity does not exist.
+
+  ## Examples
+
+      iex> get_activity!(123)
+      %Activity{}
+
+      iex> get_activity!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_activity!(id), do: Repo.get!(Activity, id)
+
+  @doc """
+  Creates a activity.
+
+  ## Examples
+
+      iex> create_activity(%{field: value})
+      {:ok, %Activity{}}
+
+      iex> create_activity(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_activity(attrs \\ %{}) do
+    %Activity{}
+    |> Activity.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a activity.
+
+  ## Examples
+
+      iex> update_activity(activity, %{field: new_value})
+      {:ok, %Activity{}}
+
+      iex> update_activity(activity, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_activity(%Activity{} = activity, attrs) do
+    activity
+    |> Activity.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a activity.
+
+  ## Examples
+
+      iex> delete_activity(activity)
+      {:ok, %Activity{}}
+
+      iex> delete_activity(activity)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_activity(%Activity{} = activity) do
+    Repo.delete(activity)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking activity changes.
+
+  ## Examples
+
+      iex> change_activity(activity)
+      %Ecto.Changeset{data: %Activity{}}
+
+  """
+  def change_activity(%Activity{} = activity, attrs \\ %{}) do
+    Activity.changeset(activity, attrs)
   end
 end

@@ -67,4 +67,67 @@ defmodule Colly.CollabTest do
       assert %Ecto.Changeset{} = Collab.change_item(item)
     end
   end
+
+  describe "activities" do
+    alias Colly.Collab.Activity
+
+    @valid_attrs %{description: "some description", name: "some name", visitors_count: 42}
+    @update_attrs %{description: "some updated description", name: "some updated name", visitors_count: 43}
+    @invalid_attrs %{description: nil, name: nil, visitors_count: nil}
+
+    def activity_fixture(attrs \\ %{}) do
+      {:ok, activity} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Collab.create_activity()
+
+      activity
+    end
+
+    test "list_activities/0 returns all activities" do
+      activity = activity_fixture()
+      assert Collab.list_activities() == [activity]
+    end
+
+    test "get_activity!/1 returns the activity with given id" do
+      activity = activity_fixture()
+      assert Collab.get_activity!(activity.id) == activity
+    end
+
+    test "create_activity/1 with valid data creates a activity" do
+      assert {:ok, %Activity{} = activity} = Collab.create_activity(@valid_attrs)
+      assert activity.description == "some description"
+      assert activity.name == "some name"
+      assert activity.visitors_count == 42
+    end
+
+    test "create_activity/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Collab.create_activity(@invalid_attrs)
+    end
+
+    test "update_activity/2 with valid data updates the activity" do
+      activity = activity_fixture()
+      assert {:ok, %Activity{} = activity} = Collab.update_activity(activity, @update_attrs)
+      assert activity.description == "some updated description"
+      assert activity.name == "some updated name"
+      assert activity.visitors_count == 43
+    end
+
+    test "update_activity/2 with invalid data returns error changeset" do
+      activity = activity_fixture()
+      assert {:error, %Ecto.Changeset{}} = Collab.update_activity(activity, @invalid_attrs)
+      assert activity == Collab.get_activity!(activity.id)
+    end
+
+    test "delete_activity/1 deletes the activity" do
+      activity = activity_fixture()
+      assert {:ok, %Activity{}} = Collab.delete_activity(activity)
+      assert_raise Ecto.NoResultsError, fn -> Collab.get_activity!(activity.id) end
+    end
+
+    test "change_activity/1 returns a activity changeset" do
+      activity = activity_fixture()
+      assert %Ecto.Changeset{} = Collab.change_activity(activity)
+    end
+  end
 end

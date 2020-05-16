@@ -17,14 +17,16 @@ defmodule CollyWeb.Router do
   scope "/", CollyWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    # live "/", PageLive, :index
+    live "/", ActivityLive.Index, :index
+    live "/:id", ActivityLive.Show, :show
 
-    live "/items", ItemLive.Index, :index
+    # live "/items", ItemLive.Index, :index
     live "/items/new", ItemLive.Index, :new
     live "/items/:id/edit", ItemLive.Index, :edit
 
-    live "/items/:id", ItemLive.Show, :show
-    live "/items/:id/show/edit", ItemLive.Show, :edit
+    # live "/items/:id", ItemLive.Show, :show
+    # live "/items/:id/show/edit", ItemLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
