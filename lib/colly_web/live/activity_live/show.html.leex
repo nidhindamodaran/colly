@@ -8,11 +8,6 @@
     activity: @activity,
     return_to: Routes.item_index_path(@socket, :index) %>
 <% end %>
-<span>
-  <%= live_patch to: Routes.item_index_path(@socket, :new, activity: @activity) do %>
-    <i class='fas fa-plus main-icon'></i>
-  <% end %>
-</span>
 
 <form action="#" phx-submit="add">
   <%= text_input :item, :content, placeholder: "Start typing" %>
