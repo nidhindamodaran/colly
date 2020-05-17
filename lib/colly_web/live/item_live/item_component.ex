@@ -6,7 +6,7 @@ defmodule CollyWeb.ItemLive.ItemComponent do
      <div id="post-<%= @item.id %>" class="item mb-3">
       <div class="card">
         <div class="card-body item-body">
-          <div class="card-text"><%= @item.content %></div>
+          <div class="card-text mb-3"><%= @item.content %></div>
           
           <a href="#" phx-click="like" phx-target="<%= @myself %>" class="card-link">
             <span class="fas fa-thumbs-up"></span><%= @item.likes_count %>

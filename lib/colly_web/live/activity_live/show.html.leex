@@ -1,4 +1,4 @@
-<h3>Session#<%= @activity.uuid %></h3>
+<h3>Activity <%= @activity.uuid %></h3>
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, CollyWeb.ItemLive.FormComponent,
     id: @item.id || :new,
