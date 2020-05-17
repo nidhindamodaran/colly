@@ -1,4 +1,4 @@
-<h1>Session#<%= @activity.uuid %></h1>
+<h3>Session#<%= @activity.uuid %></h3>
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, CollyWeb.ItemLive.FormComponent,
     id: @item.id || :new,
@@ -10,9 +10,19 @@
 <% end %>
 
 <form action="#" phx-submit="add">
-  <%= text_input :item, :content, placeholder: "Start typing" %>
-  <%= submit "Add", phx_disable_with: "Adding.." %>
+  
+  
+  <div class="input-group mb-3">
+    <%= text_input :item, :content, placeholder: "Start typing", class: "form-control"  %>
+    <div class="input-group-append">
+      <%= submit phx_disable_with: "Adding..", class: "btn btn-outline-secondary" do %>
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+      <% end %>
+    </div>
+  </div>
 </form>
+
+
 
 <div id="items" phx-update="prepend">
   <%= for item <- @items do %>
