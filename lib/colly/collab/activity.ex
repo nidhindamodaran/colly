@@ -1,5 +1,5 @@
 defmodule Colly.Collab.Activity do
-  use Ecto.Schema
+  use Colly.Schema
   import Ecto.Changeset
 
   schema "activities" do
@@ -7,6 +7,7 @@ defmodule Colly.Collab.Activity do
     field :name, :string, default: "New Activity"
     field :visitors_count, :integer, default: 0
 
+    has_many(:items, Colly.Collab.Item)
     timestamps()
   end
 

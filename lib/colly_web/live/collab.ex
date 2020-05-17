@@ -23,7 +23,7 @@ defmodule Colly.Collab do
   end
 
   def list_items(activity_id) do
-    query = from(i in Item, where: [activity_id: ^activity_id], order_by: [desc: i.id])
+    query = from(i in Item, where: [activity_uuid: ^activity_id], order_by: [desc: i.id])
     Repo.all(query)
   end
 
@@ -133,7 +133,7 @@ defmodule Colly.Collab do
   defp broadcast({:error, _reason} = error, _event), do: error
 
   defp broadcast({:ok, item}, event) do
-    Phoenix.PubSub.broadcast(Colly.PubSub, "items:#{item.activity_id}", {event, item})
+    Phoenix.PubSub.broadcast(Colly.PubSub, "items:#{item.activity_uuid}", {event, item})
     {:ok, item}
   end
 

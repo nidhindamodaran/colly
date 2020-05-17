@@ -7,6 +7,8 @@ defmodule Colly.Repo.Migrations.CreateItems do
       add :content, :string
       add :likes_count, :integer
       add :dislikes_count, :integer
+      
+      add :activity_uuid, references(:activities, type: :uuid, column: :uuid)
 
       timestamps()
     end

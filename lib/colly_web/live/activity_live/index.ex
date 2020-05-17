@@ -9,7 +9,7 @@ defmodule CollyWeb.ActivityLive.Index do
   def mount(_params, _session, socket) do
     # {:ok, assign(socket, :activities, fetch_activities())}
     {:ok, activity} = Collab.create_activity()
-    {:ok, push_redirect(socket, to: "/#{activity.id}")}
+    {:ok, push_redirect(socket, to: "/#{activity.uuid}")}
   end
 
   @impl true
