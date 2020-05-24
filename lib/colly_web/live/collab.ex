@@ -70,7 +70,6 @@ defmodule Colly.Collab do
 
   """
   def create_item(activity, attrs \\ %{}) do
-    IEx.pry
     %Item{}
     |> Item.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:activity, activity)
@@ -110,7 +109,9 @@ defmodule Colly.Collab do
 
   """
   def delete_item(%Item{} = item) do
-    Repo.delete(item)
+    item
+    |> Repo.delete()
+    |> broadcast(:item_deleted)
   end
 
   @doc """
@@ -135,6 +136,10 @@ defmodule Colly.Collab do
   defp broadcast({:ok, item}, event) do
     Phoenix.PubSub.broadcast(Colly.PubSub, "items:#{item.activity_uuid}", {event, item})
     {:ok, item}
+  end
+
+  defp broadcast(event, content, activity) do
+    Phoenix.PubSub.broadcast(Colly.PubSub, "items:#{activity.uuid}", {event, content})
   end
 
   alias Colly.Collab.Activity
@@ -231,5 +236,9 @@ defmodule Colly.Collab do
   """
   def change_activity(%Activity{} = activity, attrs \\ %{}) do
     Activity.changeset(activity, attrs)
+  end
+
+  def notify_typing(activity, content) do
+    broadcast(:typing, content, activity)
   end
 end

@@ -17,7 +17,7 @@ defmodule CollyWeb.ItemLive.ItemComponent do
           <%= live_patch to: Routes.activity_show_path(@socket, :edit, @item.activity_uuid, @item.id), class: "card-link" do %>
             <i class="fas fa-edit"></i>
           <% end %>
-          <%= link to: '#', phx_click: 'delete', phx_value_id: @item.id, class: "card-link" do %>
+          <%= link to: '#', phx_click: 'delete', phx_value_id: @item.id, class: "card-link" , data: [confirm: "Really?"] do %>
             <i class="fas fa-trash-alt"></i>
           <% end %>
         </div>

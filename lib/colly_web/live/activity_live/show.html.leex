@@ -9,9 +9,7 @@
     return_to: Routes.activity_show_path(@socket, :show, @activity.uuid) %>
 <% end %>
 
-<form action="#" phx-submit="add">
-  
-  
+<form action="#" phx-change="typing" phx-submit="add">
   <div class="input-group mb-3">
     <%= text_input :item, :content, placeholder: "Start typing", class: "form-control"  %>
     <div class="input-group-append">
@@ -20,6 +18,9 @@
       <% end %>
     </div>
   </div>
+  <%= if @typing do %>
+    <small class="text-mute">Some one typing ...</small>
+  <% end %>
 </form>
 
 

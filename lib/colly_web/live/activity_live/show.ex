@@ -1,4 +1,5 @@
 require IEx
+require Logger
 defmodule CollyWeb.ActivityLive.Show do
   use CollyWeb, :live_view
 
@@ -11,13 +12,12 @@ defmodule CollyWeb.ActivityLive.Show do
     {:ok,
     socket
     |> assign(:items, fetch_items(id))
+    |> assign(:typing, false)
     |> assign(:activity, Collab.get_activity!(id)),temporary_assigns: [items: []] }
-
-    # {:ok, assign(socket, :items, fetch_items()), temporary_assigns: [items: []]}
   end
 
   @impl true
-  def handle_params(%{"id" => id, "item_id" => item_id}, x, socket) do
+  def handle_params(%{"id" => id, "item_id" => item_id}, _, socket) do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
@@ -43,8 +43,20 @@ defmodule CollyWeb.ActivityLive.Show do
     {:noreply, socket}
   end
 
-  defp page_title(:show), do: "Show Activity"
-  defp page_title(:edit), do: "Edit Activity"
+  def handle_event("typing", %{"item" => item}, socket) do
+    Collab.notify_typing(socket.assigns.activity, item["content"])
+    {:noreply, socket}
+  end
+
+  def handle_event("delete", %{"id" => id}, socket) do
+    item = Collab.get_item!(id)
+    {:ok, _} = Collab.delete_item(item)
+
+    {:noreply, assign(socket, :items, fetch_items(socket.assigns.activity.uuid))}
+  end
+
+  defp page_title(:show), do: "Show Item"
+  defp page_title(:edit), do: "Edit Item"
 
   @impl true
   def handle_info({:item_created, item}, socket) do
@@ -53,6 +65,14 @@ defmodule CollyWeb.ActivityLive.Show do
 
   def handle_info({:item_updated, item}, socket) do
     {:noreply, update(socket, :items, fn items -> [item | items] end)}
+  end
+
+  def handle_info({:item_deleted, item}, socket) do
+    {:noreply, update(socket, :items, fn items -> fetch_items(socket.assigns.activity.uuid) end)}
+  end
+
+  def handle_info({:typing, content}, socket) do
+    {:noreply, update(socket, :typing, fn typing -> String.strip(content) != "" end)}
   end
 
   defp fetch_items(id) do
