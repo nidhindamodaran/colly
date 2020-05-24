@@ -17,11 +17,25 @@ defmodule CollyWeb.ActivityLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"id" => id, "item_id" => item_id}, x, socket) do
+    {:noreply,
+     socket
+     |> assign(:page_title, page_title(socket.assigns.live_action))
+     |> assign(:activity, Collab.get_activity!(id))
+     |> assign(:item, Collab.get_item!(item_id))}
+  end
+
+  def handle_params(%{"id" => id}, x, socket) do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:activity, Collab.get_activity!(id))}
+  end
+
+  defp apply_action(socket, :edit, %{"activity_id" => activity_id, "id" => id}) do
+    socket
+    |> assign(:page_title, "Edit Item")
+    |> assign(:item, Collab.get_item!(id))
   end
 
   def handle_event("add", %{"item" => item}, socket) do

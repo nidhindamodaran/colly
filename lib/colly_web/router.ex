@@ -20,10 +20,11 @@ defmodule CollyWeb.Router do
     # live "/", PageLive, :index
     live "/", ActivityLive.Index, :index
     live "/:id", ActivityLive.Show, :show
+    live "/:id/items/:item_id/edit", ActivityLive.Show, :edit
 
     # live "/items", ItemLive.Index, :index
     live "/items/new", ItemLive.Index, :new
-    live "/items/:id/edit", ItemLive.Index, :edit
+    # live "/items/:id/edit", ItemLive.Index, :edit
 
     # live "/items/:id", ItemLive.Show, :show
     # live "/items/:id/show/edit", ItemLive.Show, :edit

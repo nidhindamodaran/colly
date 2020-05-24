@@ -7,7 +7,7 @@ defmodule Colly.Collab.Item do
     field :dislikes_count, :integer, default: 0
     field :likes_count, :integer, default: 0
     field :name, :string, default: "Item"
-    belongs_to(:activity, Colly.Collab.Activity, foreign_key: :activity_uuid, references: :uuid, primary_key: true, type: :binary_id)
+    belongs_to(:activity, Colly.Collab.Activity, foreign_key: :activity_uuid, references: :uuid, type: :binary_id)
     timestamps()
   end
 

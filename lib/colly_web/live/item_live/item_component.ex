@@ -14,7 +14,7 @@ defmodule CollyWeb.ItemLive.ItemComponent do
           <a href="#" phx-click="dislike" phx-target="<%= @myself %>" class="card-link">
             <i class="fas fa-thumbs-down"></i><%= @item.dislikes_count %>
           </a>
-          <%= live_patch to: Routes.item_index_path(@socket, :edit, @item.id), class: "card-link" do %>
+          <%= live_patch to: Routes.activity_show_path(@socket, :edit, @item.activity_uuid, @item.id), class: "card-link" do %>
             <i class="fas fa-edit"></i>
           <% end %>
           <%= link to: '#', phx_click: 'delete', phx_value_id: @item.id, class: "card-link" do %>

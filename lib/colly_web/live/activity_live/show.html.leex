@@ -1,12 +1,12 @@
 <h3>Activity <%= @activity.uuid %></h3>
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, CollyWeb.ItemLive.FormComponent,
-    id: @item.id || :new,
+    id: @item.id,
     title: @page_title,
     action: @live_action,
     item: @item,
     activity: @activity,
-    return_to: Routes.item_index_path(@socket, :index) %>
+    return_to: Routes.activity_show_path(@socket, :show, @activity.uuid) %>
 <% end %>
 
 <form action="#" phx-submit="add">

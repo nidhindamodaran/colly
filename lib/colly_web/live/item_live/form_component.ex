@@ -7,7 +7,6 @@ defmodule CollyWeb.ItemLive.FormComponent do
   @impl true
   def update(%{item: item} = assigns, socket) do
     changeset = Collab.change_item(item)
-    IEx.pry
     {:ok,
      socket
      |> assign(assigns)
@@ -25,7 +24,7 @@ defmodule CollyWeb.ItemLive.FormComponent do
   end
 
   def handle_event("save", %{"item" => item_params}, socket) do
-    save_item(socket, socket.assigns.action, 1, item_params)
+    save_item(socket, socket.assigns.action, item_params)
   end
 
   defp save_item(socket, :edit, item_params) do
