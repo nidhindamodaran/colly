@@ -22,6 +22,19 @@ main{
   -webkit-appearance: none;
 }
 
+.scale-50{
+  zoom: 0.5;
+  -moz-transform: scale(0.5);
+}
+
+.pull-right{
+  float: right;
+}
+
+#body-editor:focus{
+  border-color: #ccc !important;
+}
+
 .invalid-feedback{
   margin-top: 5px !important;
 }

@@ -1,12 +1,14 @@
 defmodule CollyWeb.ItemLive.ItemComponent do
+
   use CollyWeb, :live_component
+  use Timex
   
   def render(assigns) do
     ~L"""
      <div id="post-<%= @item.id %>" class="item mb-3">
       <div class="card">
         <div class="card-body item-body">
-          <div class="card-text mb-3"><%= markdown(@item.content) %></div>
+          <div class="card-text mb-5"><%= markdown(@item.content) %></div>
           
           <a href="#" phx-click="like" phx-target="<%= @myself %>" class="card-link">
             <span class="fas fa-thumbs-up mr-1"></span><%= @item.likes_count %>
@@ -20,6 +22,7 @@ defmodule CollyWeb.ItemLive.ItemComponent do
           <%= link to: '#', phx_click: 'delete', phx_value_id: @item.id, class: "card-link" , data: [confirm: "Really?"] do %>
             <i class="fas fa-trash-alt mr-1"></i>
           <% end %>
+          <small class="text-mute pull-right"><%= convert_time(@item.inserted_at) %></small>
         </div>
       </div>
      </div>
@@ -40,5 +43,11 @@ defmodule CollyWeb.ItemLive.ItemComponent do
     body
     |> Earmark.to_html
     |> raw
+  end
+
+  def convert_time(time) do
+    {:ok, new_time} = time |> Timex.format("{h12}:{0m} {am}")
+
+    new_time
   end
 end

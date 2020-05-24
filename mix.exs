@@ -47,7 +47,8 @@ defmodule Colly.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:earmark, "~> 1.0.1"}
+      {:earmark, "~> 1.0.1"},
+      {:timex, "~> 3.5"}
     ]
   end
 
