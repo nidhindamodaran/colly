@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-
 </head>
 
 <body>
@@ -29,7 +28,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="<%= System.get_env("HOST") %>">New Activity</a>
           </li>
         </ul>
       </div>

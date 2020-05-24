@@ -16,6 +16,20 @@ defmodule Colly.Collab.Item do
     item
     |> cast(attrs, [:content])
     |> validate_required([:content])
-    |> validate_length(:content, min: 2, max: 200)
+    |> validate_length(:content, min: 2)
+    |> strip_unsafe_body(attrs)
+  end
+
+  defp strip_unsafe_body(item, %{"content" => nil}) do
+    item
+  end
+
+  defp strip_unsafe_body(item, %{"content" => content}) do
+    {:safe, clean_content} = Phoenix.HTML.html_escape(content)
+    item |> put_change(:content, clean_content)
+  end
+
+  defp strip_unsafe_body(item, _) do
+    item
   end
 end

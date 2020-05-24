@@ -11,9 +11,9 @@
 
 <form action="#" phx-change="typing" phx-submit="add">
   <div class="input-group mb-3">
-    <%= text_input :item, :content, placeholder: "Start typing", class: "form-control", autocomplete: "off"  %>
-    <div class="input-group-append">
-      <%= submit phx_disable_with: "Adding..", class: "btn btn-outline-secondary" do %>
+    <%= textarea :item, :content, placeholder: "Start typing in markdown", class: "form-input", id: "body-editor", description: "desc.", rows: "10", is_horizontal: true  %>
+    <div class="input-group-append submit-button">
+      <%= submit phx_disable_with: "Adding..", class: "btn btn-mute mt-3" do %>
         <i class="fa fa-arrow-right" aria-hidden="true"></i>
       <% end %>
     </div>
@@ -30,5 +30,3 @@
     <%= live_component @socket, CollyWeb.ItemLive.ItemComponent, id: item.id, item: item %>
   <% end %>
 </div>
-
-

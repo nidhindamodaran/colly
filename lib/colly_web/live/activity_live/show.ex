@@ -40,6 +40,7 @@ defmodule CollyWeb.ActivityLive.Show do
 
   def handle_event("add", %{"item" => item}, socket) do
     Collab.create_item(socket.assigns.activity, item)
+    Collab.notify_typing(socket.assigns.activity, "")
     {:noreply, socket}
   end
 

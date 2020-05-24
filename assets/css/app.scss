@@ -13,6 +13,27 @@ main{
   margin-top: 100px !important;
 }
 
+.submit-button{
+  margin-left: -50px;
+  height: 25px;
+  width: 50px;
+  color: white;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+.invalid-feedback{
+  margin-top: 5px !important;
+}
+
+.btn-mute:hover, .btn-mute:focus{
+  background-color: white;
+  border: none;
+}
+#body-editor{
+  padding-right: 50px;
+}
+
 .main-icon{
   font-size: 40px;
 }
