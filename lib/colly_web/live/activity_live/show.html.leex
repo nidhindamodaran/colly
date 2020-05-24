@@ -11,7 +11,7 @@
 
 <form action="#" phx-change="typing" phx-submit="add">
   <div class="input-group mb-3">
-    <%= text_input :item, :content, placeholder: "Start typing", class: "form-control"  %>
+    <%= text_input :item, :content, placeholder: "Start typing", class: "form-control", autocomplete: "off"  %>
     <div class="input-group-append">
       <%= submit phx_disable_with: "Adding..", class: "btn btn-outline-secondary" do %>
         <i class="fa fa-arrow-right" aria-hidden="true"></i>
