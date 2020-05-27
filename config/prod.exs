@@ -11,6 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :colly, CollyWeb.Endpoint,
   url: [host: System.get_env("HOST"), port: 443],
+  check_origin: ["//colly.work", "//www.colly.work"]
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
