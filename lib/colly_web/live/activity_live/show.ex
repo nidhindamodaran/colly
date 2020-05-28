@@ -56,7 +56,7 @@ defmodule CollyWeb.ActivityLive.Show do
     {:noreply, assign(socket, :items, fetch_items(socket.assigns.activity.uuid))}
   end
 
-  defp page_title(:show), do: "Show Item"
+  defp page_title(:show), do: "Activity"
   defp page_title(:edit), do: "Edit Item"
 
   @impl true
