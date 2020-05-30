@@ -13,13 +13,8 @@ main{
   margin-top: 100px !important;
 }
 
-.submit-button{
-  margin-left: -50px;
-  height: 25px;
-  width: 50px;
-  color: white;
-  border: 0;
-  -webkit-appearance: none;
+.cke_toolbar_break{
+  display: none !important;
 }
 
 .scale-50{

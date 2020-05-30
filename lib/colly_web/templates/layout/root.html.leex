@@ -38,9 +38,11 @@
 
   <!-- Page Content -->
   <div class="containers">
-
-    <%= @inner_content %>
-
+    <main role="main" class="container">
+      <h6 class="mb-3">Activity <%= @activity.uuid %></h6>
+      <textarea name="editor" class="d-none"></textarea>
+      <%= @inner_content %>
+    </main>
   </div>
   <!-- /.container -->
 
@@ -59,7 +61,20 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script>
-    CKEDITOR.replace( 'item[content]' );
+    CKEDITOR.replace( 'editor',{
+      width: '99%',
+      height: 400
+    } );
+
+    for (var i in CKEDITOR.instances) {
+      CKEDITOR.instances[i].on('change', function(xy) {
+        var x = document.getElementById('body-editor'); 
+        var data = CKEDITOR.instances.editor.getData();
+        x.value = data; 
+      });
+    }
+
+    
   </script>
 </body>
 
