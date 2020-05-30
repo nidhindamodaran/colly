@@ -33,7 +33,9 @@ main{
 .cke_toolbar_break{
   display: none !important;
 }
-
+.cke_toolbar_last{
+  display: none !important;
+}
 .cke_dialog_page_contents{
   padding: 10px !important;
   box-sizing: border-box !important;
