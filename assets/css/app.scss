@@ -25,6 +25,9 @@ main{
     height: 2.2em;
     width: 6em;
   }
+  select:focus{
+    background-image: none !important;
+  }
 }
 
 .cke_toolbar_break{
