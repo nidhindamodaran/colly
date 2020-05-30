@@ -25,7 +25,7 @@
 
 
 
-<div id="items" phx-update="prepend">
+<div id="items" phx-update="<%= @update_action %>">
   <%= for item <- @items do %>
     <%= live_component @socket, CollyWeb.ItemLive.ItemComponent, id: item.id, item: item %>
   <% end %>

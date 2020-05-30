@@ -1,7 +1,9 @@
+require IEx
 defmodule CollyWeb.ItemLive.ItemComponent do
 
   use CollyWeb, :live_component
   use Timex
+  alias Colly.Markdown
   
   def render(assigns) do
     ~L"""
@@ -30,18 +32,23 @@ defmodule CollyWeb.ItemLive.ItemComponent do
   end
 
   def handle_event("like", _, socket) do
+    IEx.pry
     Colly.Collab.increment_likes(socket.assigns.item)
-    {:noreply, socket}
+    {:noreply,
+    socket
+    |> assign(:update_action, "prepend")}
   end
 
   def handle_event("dislike", _, socket) do
-    Colly.Collab.increment_dislikes(socket.assigns.item)
-    {:noreply, socket}
+    # Colly.Collab.increment_dislikes(socket.assigns.item)
+    {:noreply,
+    socket
+    |> assign(:update_action, "prepend")}
   end
 
   def markdown(body) do
     body
-    |> Earmark.to_html
+    |> Markdown.to_html()
     |> raw
   end
 

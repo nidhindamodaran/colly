@@ -1,9 +1,10 @@
 defmodule Colly.Collab.Item do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Colly.Markdown
 
   schema "items" do
-    field :content, :string
+    field :content, Markdown.Ecto
     field :dislikes_count, :integer, default: 0
     field :likes_count, :integer, default: 0
     field :name, :string, default: "Item"
@@ -16,8 +17,8 @@ defmodule Colly.Collab.Item do
     item
     |> cast(attrs, [:content])
     |> validate_required([:content])
-    |> validate_length(:content, min: 2)
-    |> strip_unsafe_body(attrs)
+    # |> validate_length(:content, min: 2)
+    # |> strip_unsafe_body(attrs)
   end
 
   defp strip_unsafe_body(item, %{"content" => nil}) do

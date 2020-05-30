@@ -13,6 +13,7 @@ defmodule CollyWeb.ActivityLive.Show do
     socket
     |> assign(:items, fetch_items(id))
     |> assign(:typing, false)
+    |> assign(:update_action, "prepend")
     |> assign(:activity, Collab.get_activity!(id)),temporary_assigns: [items: []] }
   end
 
@@ -41,7 +42,9 @@ defmodule CollyWeb.ActivityLive.Show do
   def handle_event("add", %{"item" => item}, socket) do
     Collab.create_item(socket.assigns.activity, item)
     Collab.notify_typing(socket.assigns.activity, "")
-    {:noreply, socket}
+    {:noreply,
+    socket
+    |> assign(:update_action, "prepend")}
   end
 
   def handle_event("typing", %{"item" => item}, socket) do
@@ -52,8 +55,10 @@ defmodule CollyWeb.ActivityLive.Show do
   def handle_event("delete", %{"id" => id}, socket) do
     item = Collab.get_item!(id)
     {:ok, _} = Collab.delete_item(item)
-
-    {:noreply, assign(socket, :items, fetch_items(socket.assigns.activity.uuid))}
+    {:noreply,
+    socket
+    |> assign(:items, fetch_items(socket.assigns.activity.uuid))
+    |> assign(:update_action, "replace")}
   end
 
   defp page_title(:show), do: "Activity"
