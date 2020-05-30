@@ -17,6 +17,15 @@ main{
   display: none !important;
 }
 
+.cke_dialog_page_contents{
+  padding: 10px !important;
+  box-sizing: border-box !important;
+
+  .cke_dialog_ui_input_text{
+    height: auto !important;
+  }
+}
+
 .scale-50{
   zoom: 0.5;
   -moz-transform: scale(0.5);
