@@ -12,7 +12,7 @@
   <div class="input-groups mb-3">
     <%= textarea :item, :content, class: "d-none", id: "body-editor", description: "desc."  %>
     <div class="submit-button">
-      <%= submit "Add", phx_disable_with: "Adding..", class: "btn btn-sm btn-info mt-3" %>
+      <%= submit "Add", phx_disable_with: "Adding..", class: "btn btn-sm btn-medium btn-secondary mb-3 pull-right" %>
     </div>
   </div>
   <%= if @typing do %>
