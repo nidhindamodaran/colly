@@ -26,7 +26,7 @@ defmodule CollyWeb.ActivityLive.Show do
      |> assign(:item, Collab.get_item!(item_id))}
   end
 
-  def handle_params(%{"id" => id}, x, socket) do
+  def handle_params(%{"id" => id}, _, socket) do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))

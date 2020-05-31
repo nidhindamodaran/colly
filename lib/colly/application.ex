@@ -6,6 +6,8 @@ defmodule Colly.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec, warn: false
+    
     children = [
       # Start the Ecto repository
       Colly.Repo,
@@ -14,9 +16,10 @@ defmodule Colly.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Colly.PubSub},
       # Start the Endpoint (http/https)
-      CollyWeb.Endpoint
+      CollyWeb.Endpoint,
       # Start a worker by calling: Colly.Worker.start_link(arg)
       # {Colly.Worker, arg}
+      Colly.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
