@@ -22,7 +22,7 @@ defmodule CollyWeb.ItemLive.ItemComponent do
             <i class="fas fa-edit mr-1"></i>
           <% end %>
           <%= link to: '#', phx_click: 'delete', phx_value_id: @item.id, class: "card-link" , data: [confirm: "Really?"] do %>
-            <i class="fas fa-trash-alt mr-1"></i>
+            <i class="fas fa-minus-circle mr-1"></i>
           <% end %>
           <small class="text-mute pull-right"><%= convert_time(@item.inserted_at) %></small>
         </div>
