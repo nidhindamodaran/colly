@@ -37,9 +37,17 @@
   .toggle-button{
     background: #403e3e;
   }
+  .logo{
+    background-image: url(/images/logo-dark.svg);
+  }
 }
 .nav-item{
   margin-bottom: 0px;
+}
+.logo{
+  width: 86px;
+  height: 40px;
+  background-image: url(/images/logo.svg);
 }
 .toggle-button{
   float: right;
