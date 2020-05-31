@@ -39,9 +39,23 @@
   <!-- Page Content -->
   <div class="containers">
     <main role="main" class="container">
-      <h6 class="mb-5"><strong>Activity:</strong>
-        <span class="text-secondary"><%= @activity.uuid %></span>
-      </h6>
+      <div class="row">
+        <div class="col-sm">
+          <h6 class="mb-5"><strong>Activity:</strong>
+            <span class="text-secondary"><%= @activity.uuid %></span>
+          </h6>
+        </div>
+        <div class="col-sm">
+          <div class="toggle-button">
+            <label class="form-check-label toggle-label">Dark Mode</label>
+            <label class="switch pull-right">
+              <input type="checkbox" id="toggle-dark" onclick="toggle_dark();">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
       <textarea name="editor" class="d-none"></textarea>
       <%= @inner_content %>
     </main>
@@ -74,6 +88,17 @@
         var data = CKEDITOR.instances.editor.getData();
         x.value = data; 
       });
+    }
+
+    function toggle_dark()
+    {
+      var element = document.getElementsByTagName("BODY")[0];
+      if (document.getElementById('toggle-dark').checked) 
+      {
+        element.classList.add("dark-mode");
+      } else {
+          element.classList.remove("dark-mode");
+      }
     }
 
     
