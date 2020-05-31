@@ -32,7 +32,8 @@ import_config "#{Mix.env()}.exs"
 
 config :colly, Colly.Scheduler,
   jobs: [
-    {"@daily", {Mix.Tasks.Colly.RemoveEmptyActivities, :remove, []}}
+    {"@daily", {Mix.Tasks.Colly.RemoveEmptyActivities, :remove, []}},
+    {"* * * * *", {Mix.Tasks.Colly.UsageReports, :send, []}},
   ]
 
 config :colly, :remove_activities_after, %{months: 1}
